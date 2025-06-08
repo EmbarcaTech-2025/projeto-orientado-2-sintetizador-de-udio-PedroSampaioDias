@@ -10,7 +10,7 @@
 #define ADC_CHANNEL            2
 #define PWM_PIN_1              21
 #define PWM_PIN_2              10
-#define VOLUME_GAIN            1.1f
+#define VOLUME_GAIN            1.0f
 #define PWM_RESOLUTION         4095
 #define POST_ACTION_DELAY_MS   500
 

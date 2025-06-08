@@ -1,4 +1,3 @@
-// main.c
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "pico/multicore.h"
@@ -32,21 +31,45 @@ int main() {
 
     init_input();
 
+    absolute_time_t last_button_press = nil_time;
+
     while (1) {
         if (recording) {
-            set_rgb_led(true, false, false);
-        } else if (playing) {
+            set_rgb_led(true, false, false);  // Vermelho ao gravar
+        } else if (playing && buffer_has_audio) {  // Só verde se tiver áudio
             set_rgb_led(false, true, false);
         } else {
-            set_rgb_led(false, false, buffer_has_audio);
+            set_rgb_led(false, false, buffer_has_audio);  // Azul se tiver áudio
         }
 
-        if (!recording && ready && is_button_a_pressed()) {
-            sleep_ms(50);
-            record_audio();
-        } else if (!playing && ready && is_button_b_pressed()) {
-            sleep_ms(50);
-            play_audio();
+        // Ignora botões se a tela inicial estiver ativa
+        if (initial_screen_active) {
+            sleep_ms(10);
+            continue;
+        }
+
+        bool debounce_expired = is_nil_time(last_button_press) || 
+                              absolute_time_diff_us(last_button_press, get_absolute_time()) > DEBOUNCE_DELAY_MS * 1000;
+
+        if (current_screen == MENU_SCREEN && debounce_expired) {
+            if (!recording && ready && is_button_a_pressed()) {
+                last_button_press = get_absolute_time();
+                record_audio();
+            } 
+            else if (!playing && is_button_b_pressed()) {  // Removida verificação do ready
+                last_button_press = get_absolute_time();
+                current_screen = WAVEFORM_SCREEN;  // Apenas muda para tela de waveform
+            }
+        } 
+        else if (current_screen == WAVEFORM_SCREEN && debounce_expired) {
+            if (is_button_a_pressed()) {
+                last_button_press = get_absolute_time();
+                current_screen = MENU_SCREEN;
+            } 
+            else if (is_button_b_pressed() && !playing && buffer_has_audio) {  // Só reproduz se tiver áudio
+                last_button_press = get_absolute_time();
+                play_audio();
+            }
         }
 
         sleep_ms(10);
