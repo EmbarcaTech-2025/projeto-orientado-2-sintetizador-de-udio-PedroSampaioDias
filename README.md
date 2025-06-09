@@ -161,6 +161,12 @@ make -j4
 4. Copie o arquivo `sintetizador_audio.uf2` para a unidade `RPI-RP2`
 5. A placa reiniciará automaticamente e executará o programa
 
+## 📹 Demonstração
+
+[![Demonstração do Sintetizador de Áudio](https://img.youtube.com/vi/x10I40MwBMg/0.jpg)](https://www.youtube.com/watch?v=x10I40MwBMg)
+
+*(Clique na imagem para assistir ao vídeo de demonstração no YouTube)*
+
 ## 💭 Reflexão Final
 
 ### Técnicas para Melhoria
