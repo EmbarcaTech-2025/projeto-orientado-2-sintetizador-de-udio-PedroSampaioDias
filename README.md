@@ -198,7 +198,6 @@ Para implementar gravações mais longas mantendo qualidade:
 |--------------------------|-------------------------------------------|-------------------------------------|
 | Memória limitada         | Uso de cartão SD via SPI                  | Capacidade de GBs de armazenamento  |
 | Processamento intensivo  | Compressão Opus (8-16 kbps)              | Redução de 80-90% no tamanho        |
-| Consumo de energia       | Sleep mode entre amostras                 | Economia de bateria                 |
 | Qualidade de voz         | Taxa de amostragem adaptativa (8-16 kHz)  | Balanceamento qualidade/eficiência  |
 | Ruído em gravações longas| Filtro adaptativo LMS                     | Redução de ruído em tempo real      |
 
